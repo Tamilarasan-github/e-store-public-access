@@ -1,0 +1,73 @@
+type Query
+{
+	login(phoneNumber: String, password: String): UserResponse
+}
+
+type Mutation
+{
+	registerNewUser(userInput: UserInput) : UserResponse
+}
+
+#This below type is from Spring security, we do not create this class, since we are returning this class as return type we need to mention the structure here
+#type UserDetails { 
+  #username: String
+  #password: String
+  #authorities: [String]
+  # Include other fields from UserDetails as needed
+#}
+
+# Define the GraphQL type for User
+type User {
+  userId: ID
+  uuid: String
+  jwtToken: String
+  role: String
+  userName: String
+  password: String
+  firstName: String
+  middleName: String
+  lastName: String
+  emailId: String
+  phoneNumber: String
+  gender: String
+  dateOfBirth: String
+  profilePic: String
+  lastLoginDate: String
+  userAccountStatus: String
+  createdDate: String
+  updatedDate: String
+  createdBy: String
+  updatedBy: String
+  deleteFlag: Boolean
+}
+
+# Define the GraphQL input type for creating or updating User
+input UserInput {
+  userId: ID
+  uuid: String
+  userName: String
+  password: String
+  firstName: String
+  middleName: String
+  lastName: String
+  emailId: String
+  phoneNumber: String
+  gender: String
+  dateOfBirth: String
+  profilePic: String
+  lastLoginDate: String
+  userAccountStatus: String
+  createdDate: String
+  updatedDate: String
+  createdBy: String
+  updatedBy: String
+  deleteFlag: Boolean
+}
+
+type UserResponse
+{
+	user: User
+	users: [User]
+	errorMessage: String
+	successMessage: String
+}

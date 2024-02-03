@@ -1,0 +1,55 @@
+extend type Query {
+    getAllActiveProductDetailsWithStocksPriceAndDiscounts(productName: String, first: Int, after: String, before: String): ProductDetailViewConnection
+}
+
+type ProductDetailView {
+	uuid: String
+    productId: ID!
+    productCode: String
+    productName: String
+    productTitle: String
+    productCondition: String
+    description: String
+    productStatus: String
+    productSubCategoryId: ID
+    categoryName: String
+    subCategoryName: String
+    brandName: String
+    imageUrl: String
+    sellerId: ID
+    sellerName: String
+    totalPricePerUnit: Float
+    finalPricePerUnit: Float
+    taxIncluded: Boolean
+    taxType: String
+    taxPercentage: Float
+    currency: String
+    priceEffectiveDate: String
+    priceTermDate: String
+    discountType: String
+    discountAmount: Float
+    discountPercentage: Float
+    discountEffectiveDate: String
+    discountTermDate: String
+    discountMessage: String
+    totalStocks: Int
+    availableStocks: Int
+    reservedStocks: Int
+    minimumPerOrder: Int
+    maximumPerOrder: Int
+    stockMessage: String
+    stocksEffectiveDate: String
+    stocksTermDate: String
+}
+
+type ProductDetailViewConnection {
+    edges: [ProductDetailViewEdge]
+    pageInfo: PageInfo!
+}
+
+type ProductDetailViewEdge {
+    node: ProductDetailView
+    cursor: String!
+}
+
+
