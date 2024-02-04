@@ -44,7 +44,7 @@ public class JwtAuthenticationFilter {
     	return token;
     }
     
-    public static User validateToken(String jwtToken) throws Exception {
+    public static User validateToken(String jwtToken) {
     	 try {
     	     Jws<Claims> claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(jwtToken);
     	     String uuid = claims.getPayload().get("uuid").toString();
@@ -61,7 +61,7 @@ public class JwtAuthenticationFilter {
              return user;
          } catch (SignatureException | MalformedJwtException e) {
              // Token signature or format is invalid
-             throw new Exception("Invalid token");
+             throw new RuntimeException("Invalid token");
          }
     }
     

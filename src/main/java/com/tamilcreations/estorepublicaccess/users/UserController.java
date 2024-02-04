@@ -11,17 +11,12 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class UserController
 {
-	@Autowired
-	private HttpServletRequest request;
-	
-	@Autowired
-	private UserRepo userRepo;
 	
 	@Autowired
 	private UserService userService;
 	
 	@QueryMapping
-	public User getUser(@Argument long userId) throws Exception
+	public User getUser(@Argument long userId)
 	{
 		return userService.getUser(userId);
 	}
@@ -31,16 +26,7 @@ public class UserController
 	{
 		return userService.authenticateUser(phoneNumber, password);
 	}
-	
-//	@QueryMapping
-//	public User authenticateUser(@Argument  UserInput userInput) throws Exception
-//	{
-//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//		String phoneNumber = userInput.getPhoneNumber();
-//		String encyptedPassword = encoder.encode(userInput.getPassword());
-//		return null;
-//	}
-	
+		
 	@MutationMapping
 	public UserResponse registerNewUser(@Argument  UserInput userInput) throws Exception
 	{

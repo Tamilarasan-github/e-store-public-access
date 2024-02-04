@@ -12,13 +12,13 @@ public class UserRoleService
 	@Autowired
 	private UserRoleRepo userRoleRepo;
 	
-	public List<UserRole> getUserRoleByUserId(Long userId) throws Exception
+	public List<UserRole> getUserRoleByUserId(Long userId)
 	{
 		List<UserRole> userRolesList = userRoleRepo.findUserRoleByUserId(userId);
 		return userRolesList;
 	}
 	
-	public Long getRoleIdByUserId(Long userId) throws Exception
+	public Long getRoleIdByUserId(Long userId)
 	{
 		Optional<Long> userRoleOptional = userRoleRepo.findRoleIdByUserId(userId);
 		
@@ -28,7 +28,7 @@ public class UserRoleService
 		}
 		else
 		{
-			throw new Exception("User Role is not found");
+			throw new RuntimeException("User Role is not found");
 		}
 	}
 	

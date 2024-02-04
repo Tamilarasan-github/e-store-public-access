@@ -41,8 +41,6 @@ public class UserService implements UserDetailsService
 	 @Autowired
 	 private PasswordEncoder passwordEncoder;
 	 
-	 @Autowired
-	private RoleService roleService;
 	
 	@Override
 	public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException
@@ -86,21 +84,21 @@ public class UserService implements UserDetailsService
     }
 		
 	@Transactional
-	public User getUser(long userId) throws Exception
+	public User getUser(long userId)
 	{
-		Optional<User> userOptional =	 userRepo.findByUserId(userId);
+		Optional<User> userOptional = userRepo.findByUserId(userId);
 		if(userOptional.isPresent())
 		{
 			return userOptional.get();
 		}
 		else
 		{
-			throw new Exception("User not found!");
+			throw new RuntimeException("User not found!");
 		}
 	}
 	
 	@Transactional
-	public User findUserByUserUuid(String userUuid) throws Exception
+	public User findUserByUserUuid(String userUuid)
 	{
 		Optional<User> userOptional =	userRepo.findUserByUserUuid(userUuid);
 		
@@ -110,12 +108,12 @@ public class UserService implements UserDetailsService
 		}
 		else
 		{
-			throw new Exception("User not found!");
+			throw new RuntimeException("User not found!");
 		}
 		
 	}
 	
-	public UserResponse authenticateUser(String phoneNumber, String password) throws Exception
+	public UserResponse authenticateUser(String phoneNumber, String password)
 	{
 		UserDetails userDetails = loadUserByUsername(phoneNumber);
 		
@@ -123,8 +121,7 @@ public class UserService implements UserDetailsService
 		
 		if(validatePassword(password, userDetails.getPassword()))
 		{
-			boolean isUserRoleMappingFound[] = { false };
-			boolean isRoleFound[] = { false };
+
 			String userUuid = null;
 			String sellerUuid = null;
 			String roleName = null;
@@ -154,11 +151,11 @@ public class UserService implements UserDetailsService
 		}
 		else
 		{
-			throw new Exception("Unauthorized Access");
+			throw new RuntimeException("Unauthorized Access");
 		}		
 	}
 	
-	public UserResponse registerNewUser(UserInput userInput) throws Exception
+	public UserResponse registerNewUser(UserInput userInput)
 	{
 		String phoneNumber = userInput.getPhoneNumber();
 		Optional<User> userOptional = userRepo.findUserByPhoneNumber(phoneNumber);

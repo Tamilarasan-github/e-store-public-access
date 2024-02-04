@@ -9,7 +9,6 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import com.tamilcreations.estorepublicaccess.utils.CursorUtils;
-import com.tamilcreations.estorepublicaccess.utils.PublicQuery;
 
 import graphql.relay.DefaultPageInfo;
 import graphql.relay.PageInfo;
@@ -21,7 +20,7 @@ public class ProductDetailViewController
 	@Autowired
 	ProductDetailViewService productDetailViewService;
 	
-	@PublicQuery
+
 	@QueryMapping
 	public ProductDetailViewConnection getAllActiveProductDetailsWithStocksPriceAndDiscounts( @Argument @Nullable String productName,  @Argument @Nullable int first, @Argument @Nullable String after, @Argument @Nullable String before)
 	{
@@ -33,7 +32,7 @@ public class ProductDetailViewController
 	    
 		List<ProductDetailView> productDetailViewList = null;
 		int fetch = first + 1;
-		productDetailViewList = productDetailViewService.getAllActiveProductDetailsWithStocksPriceAndDiscounts(productName, first, after, before);
+		productDetailViewList = productDetailViewService.getAllActiveProductDetailsWithStocksPriceAndDiscounts(productName, fetch, after, before);
 
         List<ProductDetailViewEdge> edges = productDetailViewList.stream()
             .map(productDetailView -> new ProductDetailViewEdge(CursorUtils.encodedCursorFor(productDetailView.getProductId()).getValue(), productDetailView))

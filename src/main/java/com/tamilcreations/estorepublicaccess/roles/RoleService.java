@@ -16,7 +16,7 @@ public class RoleService
 	@Autowired
 	private UserRoleRepo userRoleRepo;
 	
-	public Role getRoleByRoleUuid(String roleUuid) throws Exception
+	public Role getRoleByRoleUuid(String roleUuid)
 	{
 		Optional<Role> roleOptional = roleRepo.findRoleByRoleUuid(roleUuid);
 		
@@ -26,11 +26,11 @@ public class RoleService
 		}
 		else
 		{
-			throw new Exception("Role UUID is not found");
+			throw new RuntimeException("Role UUID is not found");
 		}
 	}
 	
-	public Role getRoleByRoleId(Long roleId) throws Exception
+	public Role getRoleByRoleId(Long roleId)
 	{
 		Optional<Role> roleOptional = roleRepo.findRoleByRoleId(roleId);
 		
@@ -40,11 +40,11 @@ public class RoleService
 		}
 		else
 		{
-			throw new Exception("Role ID is not found");
+			throw new RuntimeException("Role ID is not found");
 		}
 	}
 	
-	public String getRoleNameByRoleId(Long roleId) throws Exception
+	public String getRoleNameByRoleId(Long roleId)
 	{
 		Optional<String> roleOptional = roleRepo.findRoleNameByRoleId(roleId);
 		
@@ -54,7 +54,7 @@ public class RoleService
 		}
 		else
 		{
-			throw new Exception("Role ID is not found");
+			throw new RuntimeException("Role ID is not found");
 		}
 	}
 	

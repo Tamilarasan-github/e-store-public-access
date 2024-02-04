@@ -16,25 +16,5 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class RoleController
 {
-	@Autowired
-	private HttpServletRequest request;
 	
-	@Autowired
-	private RoleService roleService;
-	
-	@MutationMapping
-	public RoleResponse addNewRole(@Argument RoleInput roleInput) throws Exception
-	{
-		User user = JwtAuthenticationFilter.getAuthorizationHeaderValueAndValidate(request);
-		
-		Role role = roleInput.toRole();
-		role.setUuid(UUID.randomUUID().toString());
-		role.setDeleteFlag(false);
-		role.setCreatedBy(user.getPhoneNumber());
-		role.setCreatedDate(new Date());
-		
-		Role savedRole = roleService.addNewRole(role);
-		
-		return new RoleResponse(savedRole, "New Role Saved Successfully.");
-	}
 }
