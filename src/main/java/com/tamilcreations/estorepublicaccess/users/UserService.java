@@ -147,7 +147,7 @@ public class UserService implements UserDetailsService
 			
 			user.setJwtToken(JwtAuthenticationFilter.generateToken(userDetails.getUsername(), accessList, user.getUuid()));
 			
-			return new UserResponse(user, "Login Successful");
+			return new UserResponse(user, "User Login Successful");
 		}
 		else
 		{

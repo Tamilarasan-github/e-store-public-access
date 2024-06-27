@@ -34,6 +34,7 @@ type User {
   profilePic: String
   lastLoginDate: String
   userAccountStatus: String
+  sellerId: ID
   createdDate: String
   updatedDate: String
   createdBy: String

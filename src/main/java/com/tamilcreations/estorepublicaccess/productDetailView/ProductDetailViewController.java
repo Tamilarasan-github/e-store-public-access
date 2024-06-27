@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.tamilcreations.estorepublicaccess.utils.CursorUtils;
 
@@ -14,7 +15,9 @@ import graphql.relay.DefaultPageInfo;
 import graphql.relay.PageInfo;
 import io.micrometer.common.lang.Nullable;
 
+
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProductDetailViewController
 {
 	@Autowired
@@ -37,13 +40,22 @@ public class ProductDetailViewController
         List<ProductDetailViewEdge> edges = productDetailViewList.stream()
             .map(productDetailView -> new ProductDetailViewEdge(CursorUtils.encodedCursorFor(productDetailView.getProductId()).getValue(), productDetailView))
             .collect(Collectors.toList());
-
-        PageInfo pageInfo = new DefaultPageInfo(
-        		CursorUtils.encodedCursorFor(productDetailViewList.get(0).getProductId()),  // startCursor
-        		CursorUtils.encodedCursorFor(productDetailViewList.get(productDetailViewList.size() - 1).getProductId()),  // endCursor
-        		productDetailViewList.size() > first,  // hasNextPage
-                after != null  // hasPreviousPage
-            );
+        PageInfo pageInfo = null;
+        if(productDetailViewList.size()>0)
+		{
+			pageInfo = new DefaultPageInfo(
+					CursorUtils.encodedCursorFor(productDetailViewList.get(0).getProductId()), // startCursor
+					CursorUtils.encodedCursorFor(
+							productDetailViewList.get(productDetailViewList.size() - 1).getProductId()), // endCursor
+					productDetailViewList.size() > first, // hasNextPage
+					after != null // hasPreviousPage
+			);
+		}
+        else
+        {
+        	pageInfo = new DefaultPageInfo(null, null, productDetailViewList.size() > first, // hasNextPage
+					after != null); // hasPreviousPage
+        }
         
         return new ProductDetailViewConnection(pageInfo, edges);
 		 
