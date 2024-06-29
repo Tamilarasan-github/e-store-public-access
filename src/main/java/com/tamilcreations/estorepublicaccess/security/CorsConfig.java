@@ -13,7 +13,9 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:4200"); // Add your frontend origin
+     //   config.addAllowedOrigin("*"); // Add your frontend origin //The problem is this cannot be used when this is true config.setAllowCredentials(true);
+     
+        config.addAllowedOriginPattern("*"); // Use allowedOriginPatterns to allow credentials and wildcard origins
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         config.setAllowCredentials(true);
